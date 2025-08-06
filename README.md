@@ -2,34 +2,53 @@
 Replace or remove unwanted strings in code files using customizable regex patterns
 
 ## Features
-- Removes multi-line comments (`/* ... */`)
-- Removes single-line comments (`// ...`)
-- Removes non-ASCII characters
-- Strips whitespace and removes empty lines
-- Preserves core JavaScript code structure
+- Supports multiple file types: JavaScript (.js), Python (.py), HTML (.html), Markdown (.md)
+- Configurable cleaning presets:
+  - `--remove-comments`: Removes single-line and multi-line comments
+  - `--strip-unicode`: Removes non-ASCII characters
+  - `--strip-whitespace`: Strips whitespace and removes empty lines
+- Preserves core code or content structure
+- Processes multiple files via command-line arguments
 
 ## Prerequisites
 - Python 3.x
-- Standard libraries: `re`, `pathlib`
+- Standard libraries: `re`, `pathlib`, `argparse`
+
+## Installation
+1. Save the script as `code_cleaner.py`.
+2. Ensure Python 3.x is installed on your system.
 
 ## Usage
-1. Place the script in the same directory as the input JavaScript file or specify the correct file paths.
-2. Update the `input_path` and `output_path` variables in the script to point to your input and desired output files.
-3. Run the script using:
-   ```bash
-   python script_name.py
-   ```
-4. The cleaned JavaScript code will be saved to the specified output file.
+Run the script from the command line, specifying input files and optional cleaning presets:
 
-## Input and Output
-- **Input**: A JavaScript file (e.g., `file.js`)
-- **Output**: A cleaned JavaScript file (e.g., `outputfile.js`)
+```bash
+python code_cleaner.py /path/to/file1.js /path/to/file2.py --remove-comments --strip-unicode --strip-whitespace
+```
+
+### Command-Line Arguments
+- `input_files`: One or more paths to input files (.js, .py, .html, .md)
+- `--remove-comments`: Remove single-line and multi-line comments (optional)
+- `--strip-unicode`: Remove non-ASCII characters (optional)
+- `--strip-whitespace`: Strip whitespace and remove empty lines (optional)
+
+### Example
+To clean a JavaScript and Python file, removing only comments:
+```bash
+python code_cleaner.py /path/to/jsfile.js /path/to/pyfile.py --remove-comments
+```
+
+## Supported File Types and Comment Patterns
+- **JavaScript (.js)**: Removes `//` single-line and `/* */` multi-line comments
+- **Python (.py)**: Removes `#` single-line and `""" """` or `''' '''` multi-line comments
+- **HTML (.html)**: Removes `<!-- -->` multi-line comments
+- **Markdown (.md)**: Removes `<!-- -->` multi-line comments
 
 ## Notes
-- Ensure the input file exists and is readable.
-- The script overwrites the output file if it already exists.
+- Ensure input files exist and are readable.
+- The script overwrites output files if they already exist.
 - The script assumes UTF-8 encoding for both input and output files.
+- At least one cleaning option must be implicitly or explicitly enabled.
 
 ## Limitations
-- Non-ASCII characters are removed, which may affect code with intentional non-ASCII content.
 - Complex comment structures or edge cases may require additional handling.
+- The script processes files sequentially; large files may impact performance.
